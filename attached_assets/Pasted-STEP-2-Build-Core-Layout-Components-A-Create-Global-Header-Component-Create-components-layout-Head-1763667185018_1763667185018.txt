@@ -1,0 +1,478 @@
+STEP 2: Build Core Layout Components
+A. Create Global Header Component
+Create components/layout/Header.tsx:
+typescriptimport Link from 'next/link';
+
+export default function Header() {
+  return (
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex justify-between items-center h-16">
+          {/* Logo */}
+          <Link href="/" className="flex items-center">
+            <div className="text-2xl font-bold text-blue-600">
+              FlipIQ
+            </div>
+          </Link>
+
+          {/* Main Navigation */}
+          <nav className="hidden md:flex space-x-8">
+            <Link 
+              href="/" 
+              className="text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              Home
+            </Link>
+            <Link 
+              href="/info/seller" 
+              className="text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              Sellers
+            </Link>
+            <Link 
+              href="/info/wholesaler" 
+              className="text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              Wholesalers
+            </Link>
+            <Link 
+              href="/info/agent" 
+              className="text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              Agents
+            </Link>
+            <Link 
+              href="/about-us" 
+              className="text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              About Us
+            </Link>
+            <Link 
+              href="/our-leadership" 
+              className="text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              Leadership
+            </Link>
+            <Link 
+              href="/tools" 
+              className="text-gray-700 hover:text-blue-600 transition-colors"
+            >
+              Tools
+            </Link>
+          </nav>
+
+          {/* Support Phone & Login */}
+          <div className="flex items-center space-x-4">
+            <div className="hidden md:block text-sm text-gray-600">
+              <span className="font-semibold">Support:</span> (888) 555-FLIP
+            </div>
+            <Link 
+              href="/login"
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Login
+            </Link>
+          </div>
+        </div>
+      </div>
+    </header>
+  );
+}
+
+B. Create Global Footer Component
+Create components/layout/Footer.tsx:
+typescriptimport Link from 'next/link';
+
+export default function Footer() {
+  return (
+    <footer className="bg-gray-900 text-white mt-auto">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+          {/* Company Info */}
+          <div>
+            <h3 className="text-xl font-bold mb-4">FlipIQ</h3>
+            <p className="text-gray-400 text-sm">
+              Real Estate Investment Marketplace connecting buyers, sellers, and licensed professionals.
+            </p>
+          </div>
+
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-semibold mb-4">Quick Links</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/about-us" className="text-gray-400 hover:text-white transition-colors">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link href="/our-leadership" className="text-gray-400 hover:text-white transition-colors">
+                  Leadership
+                </Link>
+              </li>
+              <li>
+                <Link href="/tools" className="text-gray-400 hover:text-white transition-colors">
+                  Tools for Pros
+                </Link>
+              </li>
+              <li>
+                <Link href="/help" className="text-gray-400 hover:text-white transition-colors">
+                  Help Center
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Resources */}
+          <div>
+            <h4 className="font-semibold mb-4">Resources</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/info/seller" className="text-gray-400 hover:text-white transition-colors">
+                  For Sellers
+                </Link>
+              </li>
+              <li>
+                <Link href="/info/wholesaler" className="text-gray-400 hover:text-white transition-colors">
+                  For Wholesalers
+                </Link>
+              </li>
+              <li>
+                <Link href="/info/agent" className="text-gray-400 hover:text-white transition-colors">
+                  For Agents
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Legal */}
+          <div>
+            <h4 className="font-semibold mb-4">Legal</h4>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <Link href="/privacy-policy" className="text-gray-400 hover:text-white transition-colors">
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="text-gray-400 hover:text-white transition-colors">
+                  Terms of Service
+                </Link>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="border-t border-gray-800 mt-8 pt-8 text-center text-sm text-gray-400">
+          <p>&copy; {new Date().getFullYear()} FlipIQ Marketplace. All rights reserved.</p>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+C. Create User Navigation Component (Authenticated Users)
+Create components/layout/Navigation.tsx:
+typescript'use client';
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+
+interface NavLink {
+  href: string;
+  label: string;
+  icon?: string;
+}
+
+export default function Navigation() {
+  const pathname = usePathname();
+
+  // Navigation links - will be persona-specific later
+  const buyerLinks: NavLink[] = [
+    { href: '/user/dashboard', label: 'Dashboard' },
+    { href: '/user/buy-property', label: 'Find Properties' },
+    { href: '/user/my-bids', label: 'My Bids' },
+    { href: '/user/buybox', label: 'Buy Box' },
+    { href: '/user/entities', label: 'My Entities' },
+    { href: '/user/network', label: 'My Network' },
+    { href: '/user/inbox', label: 'Inbox' },
+    { href: '/user/profile', label: 'Profile' },
+    { href: '/user/todos', label: 'To-Dos' },
+  ];
+
+  const sellerLinks: NavLink[] = [
+    { href: '/user/dashboard', label: 'Dashboard' },
+    { href: '/user/list-property', label: 'List Property' },
+    { href: '/user/my-listings', label: 'My Listings' },
+    { href: '/user/my-offers', label: 'My Offers' },
+    { href: '/user/network', label: 'My Network' },
+    { href: '/user/inbox', label: 'Inbox' },
+    { href: '/user/profile', label: 'Profile' },
+  ];
+
+  const operatorLinks: NavLink[] = [
+    { href: '/operator/dashboard', label: 'Dashboard' },
+    { href: '/operator/instant-offer', label: 'Instant Offers' },
+    { href: '/user/inbox', label: 'Inbox' },
+  ];
+
+  const adminLinks: NavLink[] = [
+    { href: '/admin/dashboard', label: 'Dashboard' },
+    { href: '/admin/users', label: 'User Management' },
+    { href: '/admin/entity-queue', label: 'Entity Queue' },
+    { href: '/property-details-admin', label: 'Property Admin' },
+    { href: '/upload-contacts', label: 'Upload Contacts' },
+  ];
+
+  // For now, show buyer links (will be dynamic based on user role later)
+  const links = buyerLinks;
+
+  const isActive = (href: string) => pathname === href;
+
+  return (
+    <nav className="bg-white border-r border-gray-200 w-64 min-h-screen p-4">
+      <ul className="space-y-2">
+        {links.map((link) => (
+          <li key={link.href}>
+            <Link
+              href={link.href}
+              className={`
+                block px-4 py-2 rounded-lg transition-colors
+                ${isActive(link.href)
+                  ? 'bg-blue-600 text-white'
+                  : 'text-gray-700 hover:bg-gray-100'
+                }
+              `}
+            >
+              {link.label}
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
+}
+
+D. Create Public Layout (No Auth Required)
+Create components/layout/PublicLayout.tsx:
+typescriptimport Header from './Header';
+import Footer from './Footer';
+
+export default function PublicLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">
+        {children}
+      </main>
+      <Footer />
+    </div>
+  );
+}
+
+E. Create Authenticated Layout (With Sidebar Navigation)
+Create components/layout/AuthenticatedLayout.tsx:
+typescriptimport Header from './Header';
+import Footer from './Footer';
+import Navigation from './Navigation';
+
+export default function AuthenticatedLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <div className="flex flex-grow">
+        <Navigation />
+        <main className="flex-grow bg-gray-50 p-6">
+          {children}
+        </main>
+      </div>
+      <Footer />
+    </div>
+  );
+}
+
+F. Update Root Layout to Include Layouts
+Update app/layout.tsx:
+typescriptimport type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "FlipIQ Marketplace",
+  description: "Real Estate Investment Marketplace",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        {children}
+      </body>
+    </html>
+  );
+}
+
+G. Apply Layouts to Pages
+Example 1: Homepage (Public Layout)
+Update app/page.tsx:
+typescriptimport PublicLayout from '@/components/layout/PublicLayout';
+
+export default function HomePage() {
+  return (
+    <PublicLayout>
+      <div className="min-h-[60vh] flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">
+            Find Your Next Real Estate Investment
+          </h1>
+          <p className="text-xl text-gray-600 mb-8">
+            Connect with verified buyers, sellers, and licensed professionals
+          </p>
+          <div className="flex gap-4 justify-center">
+            <a 
+              href="/user/buy-property"
+              className="bg-blue-600 text-white px-8 py-3 rounded-lg hover:bg-blue-700 transition-colors"
+            >
+              Find Deals
+            </a>
+            <a 
+              href="/user/list-property"
+              className="bg-gray-200 text-gray-900 px-8 py-3 rounded-lg hover:bg-gray-300 transition-colors"
+            >
+              List Property
+            </a>
+          </div>
+        </div>
+      </div>
+    </PublicLayout>
+  );
+}
+Example 2: User Dashboard (Authenticated Layout)
+Update app/user/dashboard/page.tsx:
+typescriptimport AuthenticatedLayout from '@/components/layout/AuthenticatedLayout';
+
+export default function UserDashboard() {
+  return (
+    <AuthenticatedLayout>
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+          Dashboard
+        </h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Stats Cards */}
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-gray-500 text-sm font-semibold mb-2">Active Bids</h3>
+            <p className="text-3xl font-bold text-gray-900">0</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-gray-500 text-sm font-semibold mb-2">Properties Watched</h3>
+            <p className="text-3xl font-bold text-gray-900">0</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow">
+            <h3 className="text-gray-500 text-sm font-semibold mb-2">Account Tier</h3>
+            <p className="text-3xl font-bold text-blue-600">Tier 1</p>
+          </div>
+        </div>
+      </div>
+    </AuthenticatedLayout>
+  );
+}
+Example 3: Login Page (Public Layout, No Footer)
+Update app/login/page.tsx:
+typescriptimport Header from '@/components/layout/Header';
+
+export default function LoginPage() {
+  return (
+    <div className="min-h-screen flex flex-col">
+      <Header />
+      <div className="flex-grow flex items-center justify-center bg-gray-50">
+        <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
+          <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">
+            Welcome to FlipIQ
+          </h1>
+          <p className="text-gray-600 text-center mb-8">
+            Sign in to access the marketplace
+          </p>
+          {/* Login form will go here */}
+          <div className="space-y-4">
+            <button className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition-colors">
+              Login (Coming Soon)
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+H. Apply Layouts to ALL Other Pages
+Now update these pages with appropriate layouts:
+PUBLIC PAGES → Use PublicLayout:
+
+/info/seller/page.tsx
+/info/wholesaler/page.tsx
+/info/agent/page.tsx
+/about-us/page.tsx
+/our-leadership/page.tsx
+/tools/page.tsx
+/privacy-policy/page.tsx
+/terms/page.tsx
+/help/page.tsx
+/affiliate/page.tsx
+/onboarding/page.tsx
+
+USER PAGES → Use AuthenticatedLayout:
+
+All pages under /user/*
+
+OPERATOR PAGES → Use AuthenticatedLayout:
+
+All pages under /operator/*
+
+ADMIN PAGES → Use AuthenticatedLayout:
+
+All pages under /admin/*
+/property-details-admin/page.tsx
+/upload-contacts/page.tsx
+
+LENDER PAGES → Use custom layout (Header only, no nav):
+
+/lender/certify/[token]/page.tsx
+
+
+✅ VERIFICATION CHECKLIST
+After completing Step 2, verify:
+
+✅ Header appears on ALL pages with FlipIQ logo and navigation
+✅ Footer appears on public pages
+✅ Sidebar navigation appears on /user/*, /operator/*, /admin/* pages
+✅ Logo in header is clickable and navigates to homepage
+✅ Navigation links are clickable and route correctly
+✅ Active page is highlighted in sidebar navigation (blue background)
+✅ Support phone number shows in header
+✅ Layout is responsive (test on mobile view)
+✅ No console errors
+
+
+📊 WHAT YOU NOW HAVE
+✅ Consistent header across all pages
+✅ Professional footer with links
+✅ Sidebar navigation for authenticated pages
+✅ Two layout patterns: Public vs. Authenticated
+✅ Responsive design foundation
+✅ Active page highlighting in navigation
+✅ Clickable logo for easy navigation

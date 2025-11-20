@@ -1,19 +1,29 @@
-import React from "react";
+import React from 'react';
+import { AuthenticatedLayout } from '@/components/layout/AuthenticatedLayout';
 
 export default function UserDashboardPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          User Dashboard
+    <AuthenticatedLayout>
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900 mb-6">
+          Dashboard
         </h1>
-        <p className="text-gray-600">
-          Route: /user/dashboard
-        </p>
-        <p className="text-sm text-gray-400 mt-2">
-          ✅ Route configured and working
-        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {/* Stats Cards */}
+          <div className="bg-white p-6 rounded-lg shadow border border-gray-100">
+            <h3 className="text-gray-500 text-sm font-semibold mb-2">Active Bids</h3>
+            <p className="text-3xl font-bold text-gray-900">0</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow border border-gray-100">
+            <h3 className="text-gray-500 text-sm font-semibold mb-2">Properties Watched</h3>
+            <p className="text-3xl font-bold text-gray-900">0</p>
+          </div>
+          <div className="bg-white p-6 rounded-lg shadow border border-gray-100">
+            <h3 className="text-gray-500 text-sm font-semibold mb-2">Account Tier</h3>
+            <p className="text-3xl font-bold text-blue-600">Tier 1</p>
+          </div>
+        </div>
       </div>
-    </div>
+    </AuthenticatedLayout>
   );
 }
