@@ -1,0 +1,293 @@
+Objective
+Create the foundational file structure and routing framework for FlipIQ Marketplace. This establishes the skeleton before we add any Figma designs or page content.
+
+STEP 1: Initialize Next.js Project Structure
+A. Create Next.js 14+ App
+bashnpx create-next-app@latest flipiq-marketplace
+```
+
+**Configuration during setup:**
+- ✅ TypeScript: Yes
+- ✅ ESLint: Yes
+- ✅ Tailwind CSS: Yes
+- ✅ `src/` directory: No (use app router directly)
+- ✅ App Router: Yes
+- ✅ Import alias: Yes (@/*)
+
+---
+
+### **B. Create Complete Folder Structure**
+
+Create this **exact folder structure** in your project root:
+```
+flipiq-marketplace/
+├── app/
+│   ├── page.tsx                          # Homepage
+│   ├── layout.tsx                        # Root layout
+│   ├── login/
+│   │   └── page.tsx
+│   ├── onboarding/
+│   │   └── page.tsx
+│   ├── affiliate/
+│   │   └── page.tsx
+│   ├── user/
+│   │   ├── dashboard/
+│   │   │   └── page.tsx
+│   │   ├── profile/
+│   │   │   └── page.tsx
+│   │   ├── todos/
+│   │   │   └── page.tsx
+│   │   ├── entities/
+│   │   │   └── page.tsx
+│   │   ├── network/
+│   │   │   └── page.tsx
+│   │   ├── inbox/
+│   │   │   └── page.tsx
+│   │   ├── buy-property/
+│   │   │   └── page.tsx
+│   │   ├── property-details/
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
+│   │   ├── my-bids/
+│   │   │   └── page.tsx
+│   │   ├── bid-details/
+│   │   │   └── [id]/
+│   │   │       └── page.tsx
+│   │   ├── buybox/
+│   │   │   └── page.tsx
+│   │   ├── list-property/
+│   │   │   └── page.tsx
+│   │   ├── my-listings/
+│   │   │   └── page.tsx
+│   │   ├── my-offers/
+│   │   │   └── page.tsx
+│   │   ├── seller-counter/
+│   │   │   └── page.tsx
+│   │   └── counter-bid/
+│   │       └── page.tsx
+│   ├── operator/
+│   │   ├── dashboard/
+│   │   │   └── page.tsx
+│   │   └── instant-offer/
+│   │       └── page.tsx
+│   ├── lender/
+│   │   └── certify/
+│   │       └── [token]/
+│   │           └── page.tsx
+│   ├── admin/
+│   │   ├── dashboard/
+│   │   │   └── page.tsx
+│   │   ├── users/
+│   │   │   └── page.tsx
+│   │   └── entity-queue/
+│   │       └── page.tsx
+│   ├── info/
+│   │   ├── seller/
+│   │   │   └── page.tsx
+│   │   ├── wholesaler/
+│   │   │   └── page.tsx
+│   │   └── agent/
+│   │       └── page.tsx
+│   ├── about-us/
+│   │   └── page.tsx
+│   ├── our-leadership/
+│   │   └── page.tsx
+│   ├── tools/
+│   │   └── page.tsx
+│   ├── privacy-policy/
+│   │   └── page.tsx
+│   ├── terms/
+│   │   └── page.tsx
+│   ├── help/
+│   │   └── page.tsx
+│   ├── property-details-admin/
+│   │   └── page.tsx
+│   └── upload-contacts/
+│       └── page.tsx
+├── components/
+│   ├── layout/
+│   │   ├── Header.tsx
+│   │   ├── Footer.tsx
+│   │   └── Navigation.tsx
+│   ├── forms/
+│   ├── cards/
+│   └── common/
+├── lib/
+│   ├── api/
+│   └── utils/
+├── types/
+│   └── index.ts
+└── public/
+    └── images/
+
+C. Create Placeholder Page Files
+For EVERY page.tsx file created above, use this exact template:
+typescript// Example: app/page.tsx
+export default function HomePage() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Homepage
+        </h1>
+        <p className="text-gray-600">
+          Route: /
+        </p>
+        <p className="text-sm text-gray-400 mt-2">
+          ✅ Route configured and working
+        </p>
+      </div>
+    </div>
+  );
+}
+For dynamic routes (with [id] or [token]):
+typescript// Example: app/user/property-details/[id]/page.tsx
+export default function PropertyDetailPage({ 
+  params 
+}: { 
+  params: { id: string } 
+}) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">
+          Property Detail
+        </h1>
+        <p className="text-gray-600">
+          Route: /user/property-details/{params.id}
+        </p>
+        <p className="text-sm text-gray-400 mt-2">
+          ✅ Route configured and working
+        </p>
+      </div>
+    </div>
+  );
+}
+
+D. Update Root Layout
+Replace app/layout.tsx with:
+typescriptimport type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+
+const inter = Inter({ subsets: ["latin"] });
+
+export const metadata: Metadata = {
+  title: "FlipIQ Marketplace",
+  description: "Real Estate Investment Marketplace",
+};
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
+  return (
+    <html lang="en">
+      <body className={inter.className}>
+        {children}
+      </body>
+    </html>
+  );
+}
+
+E. Create Types File
+Create types/index.ts:
+typescript// User Types
+export enum UserTier {
+  TIER_0 = 0,  // Unverified
+  TIER_1 = 1,  // Active/Not Verified
+  TIER_2 = 2,  // Active/Verified with POF
+  TIER_3 = 3,  // Certified Pro
+  TIER_4 = 4,  // Certified VIP
+}
+
+export enum UserRole {
+  BUYER = "BUYER",
+  SELLER = "SELLER",
+  AGENT = "AGENT",
+  WHOLESALER = "WHOLESALER",
+  OPERATOR = "OPERATOR",
+  ADMIN = "ADMIN",
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+  tier: UserTier;
+  sponsorId?: string;
+}
+
+// Property Types
+export interface Property {
+  id: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  price: number;
+  bedrooms: number;
+  bathrooms: number;
+  squareFeet: number;
+  listingType: "FOR_SALE_BY_OWNER" | "POSTED_BY_AGENT" | "WHOLESALER";
+}
+
+// Bid Types
+export enum BidStatus {
+  NEW = "NEW",
+  VIEWED = "VIEWED",
+  OFFER_SUBMITTED = "OFFER_SUBMITTED",
+  OPEN_ESCROW = "OPEN_ESCROW",
+  CLOSED = "CLOSED",
+}
+
+export interface Bid {
+  id: string;
+  propertyId: string;
+  buyerId: string;
+  amount: number;
+  status: BidStatus;
+  createdAt: Date;
+}
+
+// Entity Types
+export interface BuyerEntity {
+  id: string;
+  name: string;
+  entityType: "LLC" | "TRUST" | "CORP";
+  state: string;
+  verified: boolean;
+}
+
+✅ VERIFICATION CHECKLIST
+After completing Step 1, verify:
+
+✅ Run npm run dev successfully
+✅ Navigate to http://localhost:3000 - see Homepage placeholder
+✅ Navigate to http://localhost:3000/user/dashboard - see User Dashboard placeholder
+✅ Navigate to http://localhost:3000/user/property-details/123 - see Property Detail with ID "123"
+✅ All 38+ routes should show their placeholder pages
+✅ No console errors
+✅ Tailwind CSS working (centered text, gray backgrounds visible)
+
+
+📊 WHAT YOU NOW HAVE
+✅ Complete URL routing structure (38+ routes)
+✅ File organization matching the architecture
+✅ TypeScript types for core entities
+✅ Tailwind CSS configured
+✅ Dynamic routing working (property IDs, lender tokens)
+✅ Clean foundation ready for Figma designs
+
+🎯 NEXT STEP PREVIEW
+Step 2 will be: Create reusable layout components (Header, Footer, Navigation) that will wrap all pages.
+
+⚠️ CRITICAL NOTES
+
+DO NOT add any backend/API code yet
+DO NOT add any authentication logic yet
+DO NOT attempt to connect to external services
+ONLY focus on: file structure + routing + placeholders
+Every route must be independently accessible and show its placeholder
