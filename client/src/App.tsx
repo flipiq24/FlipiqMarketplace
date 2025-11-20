@@ -3,7 +3,6 @@ import { queryClient } from "./lib/queryClient";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { RootLayout } from "@/components/layout/RootLayout";
 import NotFound from "@/pages/not-found";
 
 // Import all pages
@@ -52,61 +51,59 @@ import UploadContactsPage from "@/pages/upload-contacts";
 
 function Router() {
   return (
-    <RootLayout>
-      <Switch>
-        <Route path="/" component={HomePage} />
-        <Route path="/login" component={LoginPage} />
-        <Route path="/onboarding" component={OnboardingPage} />
-        <Route path="/affiliate" component={AffiliatePage} />
+    <Switch>
+      <Route path="/" component={HomePage} />
+      <Route path="/login" component={LoginPage} />
+      <Route path="/onboarding" component={OnboardingPage} />
+      <Route path="/affiliate" component={AffiliatePage} />
 
-        {/* User Routes */}
-        <Route path="/user/dashboard" component={UserDashboardPage} />
-        <Route path="/user/profile" component={UserProfilePage} />
-        <Route path="/user/todos" component={UserTodosPage} />
-        <Route path="/user/entities" component={UserEntitiesPage} />
-        <Route path="/user/network" component={UserNetworkPage} />
-        <Route path="/user/inbox" component={UserInboxPage} />
-        <Route path="/user/buy-property" component={UserBuyPropertyPage} />
-        <Route path="/user/property-details/:id" component={UserPropertyDetailsPage} />
-        <Route path="/user/my-bids" component={UserMyBidsPage} />
-        <Route path="/user/bid-details/:id" component={UserBidDetailsPage} />
-        <Route path="/user/buybox" component={UserBuyboxPage} />
-        <Route path="/user/list-property" component={UserListPropertyPage} />
-        <Route path="/user/my-listings" component={UserMyListingsPage} />
-        <Route path="/user/my-offers" component={UserMyOffersPage} />
-        <Route path="/user/seller-counter" component={UserSellerCounterPage} />
-        <Route path="/user/counter-bid" component={UserCounterBidPage} />
+      {/* User Routes */}
+      <Route path="/user/dashboard" component={UserDashboardPage} />
+      <Route path="/user/profile" component={UserProfilePage} />
+      <Route path="/user/todos" component={UserTodosPage} />
+      <Route path="/user/entities" component={UserEntitiesPage} />
+      <Route path="/user/network" component={UserNetworkPage} />
+      <Route path="/user/inbox" component={UserInboxPage} />
+      <Route path="/user/buy-property" component={UserBuyPropertyPage} />
+      <Route path="/user/property-details/:id" component={UserPropertyDetailsPage} />
+      <Route path="/user/my-bids" component={UserMyBidsPage} />
+      <Route path="/user/bid-details/:id" component={UserBidDetailsPage} />
+      <Route path="/user/buybox" component={UserBuyboxPage} />
+      <Route path="/user/list-property" component={UserListPropertyPage} />
+      <Route path="/user/my-listings" component={UserMyListingsPage} />
+      <Route path="/user/my-offers" component={UserMyOffersPage} />
+      <Route path="/user/seller-counter" component={UserSellerCounterPage} />
+      <Route path="/user/counter-bid" component={UserCounterBidPage} />
 
-        {/* Operator Routes */}
-        <Route path="/operator/dashboard" component={OperatorDashboardPage} />
-        <Route path="/operator/instant-offer" component={OperatorInstantOfferPage} />
+      {/* Operator Routes */}
+      <Route path="/operator/dashboard" component={OperatorDashboardPage} />
+      <Route path="/operator/instant-offer" component={OperatorInstantOfferPage} />
 
-        {/* Lender Routes */}
-        <Route path="/lender/certify/:token" component={LenderCertifyPage} />
+      {/* Lender Routes */}
+      <Route path="/lender/certify/:token" component={LenderCertifyPage} />
 
-        {/* Admin Routes */}
-        <Route path="/admin/dashboard" component={AdminDashboardPage} />
-        <Route path="/admin/users" component={AdminUsersPage} />
-        <Route path="/admin/entity-queue" component={AdminEntityQueuePage} />
+      {/* Admin Routes */}
+      <Route path="/admin/dashboard" component={AdminDashboardPage} />
+      <Route path="/admin/users" component={AdminUsersPage} />
+      <Route path="/admin/entity-queue" component={AdminEntityQueuePage} />
 
-        {/* Info Routes */}
-        <Route path="/info/seller" component={InfoSellerPage} />
-        <Route path="/info/wholesaler" component={InfoWholesalerPage} />
-        <Route path="/info/agent" component={InfoAgentPage} />
+      {/* Info Routes */}
+      <Route path="/info/seller" component={InfoSellerPage} />
+      <Route path="/info/wholesaler" component={InfoWholesalerPage} />
+      <Route path="/info/agent" component={InfoAgentPage} />
 
-        {/* Misc Routes */}
-        <Route path="/about-us" component={AboutUsPage} />
-        <Route path="/our-leadership" component={OurLeadershipPage} />
-        <Route path="/tools" component={ToolsPage} />
-        <Route path="/privacy-policy" component={PrivacyPolicyPage} />
-        <Route path="/terms" component={TermsPage} />
-        <Route path="/help" component={HelpPage} />
-        <Route path="/property-details-admin" component={PropertyDetailsAdminPage} />
-        <Route path="/upload-contacts" component={UploadContactsPage} />
+      {/* Misc Routes */}
+      <Route path="/about-us" component={AboutUsPage} />
+      <Route path="/our-leadership" component={OurLeadershipPage} />
+      <Route path="/tools" component={ToolsPage} />
+      <Route path="/privacy-policy" component={PrivacyPolicyPage} />
+      <Route path="/terms" component={TermsPage} />
+      <Route path="/help" component={HelpPage} />
+      <Route path="/property-details-admin" component={PropertyDetailsAdminPage} />
+      <Route path="/upload-contacts" component={UploadContactsPage} />
 
-        <Route component={NotFound} />
-      </Switch>
-    </RootLayout>
+      <Route component={NotFound} />
+    </Switch>
   );
 }
 
