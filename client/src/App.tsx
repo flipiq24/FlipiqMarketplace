@@ -27,6 +27,10 @@ import UserMyListingsPage from "@/pages/user/my-listings";
 import UserMyOffersPage from "@/pages/user/my-offers";
 import UserSellerCounterPage from "@/pages/user/seller-counter";
 import UserCounterBidPage from "@/pages/user/counter-bid";
+import UserOfferDetailsPage from "@/pages/user/offer-details";
+
+import MyPropertiesPage from "@/pages/sell/index";
+import PostPropertyPage from "@/pages/sell/add";
 
 import OperatorDashboardPage from "@/pages/operator/dashboard";
 import OperatorInstantOfferPage from "@/pages/operator/instant-offer";
@@ -74,6 +78,11 @@ function Router() {
       <Route path="/user/my-offers" component={UserMyOffersPage} />
       <Route path="/user/seller-counter" component={UserSellerCounterPage} />
       <Route path="/user/counter-bid" component={UserCounterBidPage} />
+      <Route path="/user/offer-details/:id" component={UserOfferDetailsPage} />
+
+      {/* Seller Routes */}
+      <Route path="/sell" component={MyPropertiesPage} />
+      <Route path="/sell/add" component={PostPropertyPage} />
 
       {/* Operator Routes */}
       <Route path="/operator/dashboard" component={OperatorDashboardPage} />
