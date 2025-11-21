@@ -269,51 +269,76 @@ export default function MinimalistLandingPage() {
       {/* Main Content */}
       <main className="flex-grow flex flex-col items-center justify-center max-w-6xl mx-auto w-full px-4 text-center">
         {/* Logo */}
-        <div className="mb-6 transform hover:scale-105 transition-transform duration-500">
-           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className="w-40 h-40 mx-auto">
-              <path d="M20 100 L100 30 L180 100" fill="none" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
-              <rect x="140" y="50" width="20" height="40" fill="#fb6200" />
-              <path d="M40 100 V160 M160 100 V160" fill="none" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
-              <circle cx="100" cy="110" r="30" fill="none" stroke="#fb6200" strokeWidth="8" />
-              <path d="M100 110 m-10 0 a 10 10 0 0 1 20 0" fill="none" stroke="#fb6200" strokeWidth="6" strokeLinecap="round" />
-              <path d="M90 150 h20 M90 160 h20" stroke="#0f172a" strokeWidth="6" strokeLinecap="round" />
-              <path d="M95 170 h10" stroke="#0f172a" strokeWidth="6" strokeLinecap="round" />
-              <line x1="100" y1="10" x2="100" y2="20" stroke="#fb6200" strokeWidth="6" strokeLinecap="round" />
-              <line x1="50" y1="30" x2="60" y2="40" stroke="#fb6200" strokeWidth="6" strokeLinecap="round" />
-              <line x1="150" y1="30" x2="140" y2="40" stroke="#fb6200" strokeWidth="6" strokeLinecap="round" />
+        <div className="mb-8 transform hover:scale-105 transition-transform duration-500 flex flex-col items-center">
+           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" className="w-64 h-64">
+              {/* House Roof */}
+              <path d="M50 120 L150 40 L250 120" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
+              {/* Chimney */}
+              <path d="M210 60 V90" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" />
+              {/* Walls - Vertical Lines */}
+              <path d="M80 130 V200" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" />
+              <path d="M220 130 V200" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" />
+              
+              {/* Rays */}
+              <line x1="150" y1="10" x2="150" y2="25" stroke="#fb6200" strokeWidth="10" strokeLinecap="round" />
+              <line x1="90" y1="30" x2="105" y2="45" stroke="#fb6200" strokeWidth="10" strokeLinecap="round" />
+              <line x1="210" y1="30" x2="195" y2="45" stroke="#fb6200" strokeWidth="10" strokeLinecap="round" />
+
+              {/* Lightbulb */}
+              <circle cx="150" cy="140" r="35" fill="none" stroke="#fb6200" strokeWidth="10" />
+               {/* Bulb Filament checkmark style */}
+              <path d="M135 135 L150 150 L165 135" fill="none" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+
+              {/* Bulb Base */}
+              <path d="M135 180 h30" stroke="#0f172a" strokeWidth="10" strokeLinecap="round" />
+              <path d="M135 192 h30" stroke="#0f172a" strokeWidth="10" strokeLinecap="round" />
+              <path d="M140 204 h20" stroke="#0f172a" strokeWidth="10" strokeLinecap="round" />
+              
+              {/* Text "Flip" */}
+              <text x="40" y="260" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="60" fill="#0f172a">Flip</text>
+              
+              {/* Text "iq" with custom Q arrow */}
+              <text x="155" y="260" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="60" fill="#fb6200">iq</text>
+              
+              {/* Custom Arrow for 'q' tail */}
+               <defs>
+                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+                  <polygon points="0 0, 10 3.5, 0 7" fill="#fb6200" />
+                </marker>
+              </defs>
+              {/* Drawing the arrow on the q */}
+              <line x1="205" y1="260" x2="215" y2="270" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" markerEnd="url(#arrowhead)" />
             </svg>
-            <h1 className="text-6xl font-bold text-slate-900 mt-2">
-              Flip<span className="text-[#fb6200]">iq</span>
-            </h1>
         </div>
 
         {/* Tagline */}
-        <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-10 leading-tight max-w-3xl">
-          Powerful AI Tools for <span className="text-[#fb6200]">Smart</span> Agents, Wholesalers, Investors, and Buyers
+        <h2 className="text-2xl md:text-4xl font-bold text-slate-800 mb-10 leading-tight max-w-4xl tracking-tight">
+          Powerful AI Tools for <span className="text-[#fb6200]">Smart</span>
+          <br className="hidden md:block" /> Agents, Wholesalers, Investors, and Buyers
         </h2>
 
         {/* Search Bar */}
-        <div className={`w-full max-w-3xl mb-12 relative transition-all duration-500 ${isAddressSectionActive ? 'scale-105 ring-4 ring-orange-100 rounded-full' : ''}`}>
+        <div className={`w-full max-w-3xl mb-16 relative transition-all duration-500 ${isAddressSectionActive ? 'scale-105 ring-4 ring-orange-100 rounded-full' : ''}`}>
            <input
             type="text"
             placeholder={placeholder}
-            className="w-full px-8 py-4 rounded-full border border-gray-200 shadow-lg text-lg focus:outline-none focus:border-[#fb6200] focus:ring-2 focus:ring-[#fb6200] transition-all text-slate-700 placeholder:text-slate-400"
+            className="w-full px-8 py-5 rounded-full border border-gray-200 shadow-lg text-lg focus:outline-none focus:border-[#fb6200] focus:ring-2 focus:ring-[#fb6200] transition-all text-slate-700 placeholder:text-slate-400"
             autoFocus={isAddressSectionActive}
           />
-          <button className="absolute right-2 top-2 bg-[#fb6200] p-2.5 rounded-full text-white hover:bg-[#e55a00] transition-colors">
+          <button className="absolute right-2 top-2 bg-white p-3 rounded-full text-slate-400 hover:text-[#fb6200] transition-colors">
             <Search className="w-6 h-6" />
           </button>
         </div>
 
         {/* CTA Buttons */}
-        <div className="flex flex-wrap justify-center gap-6 w-full">
+        <div className="flex flex-wrap justify-center gap-6 w-full max-w-5xl">
           {ctaData.map((item) => (
             <button
               key={item.id}
               onClick={() => handleButtonClick(item.placeholder, item.id)}
               onMouseEnter={() => setHoveredButton(item.id)}
               onMouseLeave={() => setHoveredButton(null)}
-              className="bg-[#fb6200] hover:bg-[#e55a00] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 min-w-[220px]"
+              className="bg-[#fb6200] hover:bg-[#e55a00] text-white px-10 py-4 rounded-xl font-bold text-lg shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 min-w-[240px]"
             >
               {item.text}
             </button>
