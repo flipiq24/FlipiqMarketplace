@@ -1,0 +1,311 @@
+🧹 CLEANUP & REBUILD - GET BACK ON TRACK
+Let's clean up and rebuild correctly with Next.js as originally specified.
+
+STEP 1: BACKUP & CLEAN SLATE
+Run these commands in Replit Shell:
+bash# Navigate to workspace root
+cd ~/workspace
+
+# Create backup of current code (just in case)
+cp -r flipiq-marketplace flipiq-marketplace-backup
+
+# Remove the incorrect setup
+rm -rf flipiq-marketplace
+
+# Confirm it's gone
+ls -la
+
+STEP 2: CREATE NEXT.JS PROJECT (CORRECTLY)
+bash# Create new Next.js 14 project with correct settings
+npx create-next-app@latest flipiq-marketplace --typescript --tailwind --app --no-src-dir --import-alias "@/*"
+
+# When prompted, answer:
+# ✓ Would you like to use TypeScript? → Yes
+# ✓ Would you like to use ESLint? → Yes  
+# ✓ Would you like to use Tailwind CSS? → Yes
+# ✓ Would you like to use `src/` directory? → No
+# ✓ Would you like to use App Router? → Yes
+# ✓ Would you like to customize the default import alias (@/*)? → No
+
+# Navigate into project
+cd flipiq-marketplace
+
+STEP 3: VERIFY CORRECT STRUCTURE
+bash# Check that app/ folder exists (NOT client/src/pages)
+ls -la
+
+# Should see:
+# app/
+# components/ (we'll create this)
+# public/
+# package.json
+# next.config.js (NOT vite.config.js)
+# tsconfig.json
+
+STEP 4: CREATE COMPLETE FOLDER STRUCTURE
+Copy and paste this entire block into Replit Shell:
+bash# Create all folders at once
+mkdir -p app/login
+mkdir -p app/onboarding
+mkdir -p app/affiliate
+mkdir -p app/user/dashboard
+mkdir -p app/user/profile
+mkdir -p app/user/todos
+mkdir -p app/user/entities
+mkdir -p app/user/network
+mkdir -p app/user/inbox
+mkdir -p app/user/buy-property
+mkdir -p app/user/property-details/\[id\]
+mkdir -p app/user/my-bids
+mkdir -p app/user/bid-details/\[id\]
+mkdir -p app/user/buybox
+mkdir -p app/user/list-property
+mkdir -p app/user/my-listings
+mkdir -p app/user/my-offers
+mkdir -p app/user/offer-details/\[id\]
+mkdir -p app/user/seller-counter
+mkdir -p app/user/counter-bid
+mkdir -p app/sell/add
+mkdir -p app/operator/dashboard
+mkdir -p app/operator/instant-offer
+mkdir -p app/lender/certify/\[token\]
+mkdir -p app/admin/dashboard
+mkdir -p app/admin/users
+mkdir -p app/admin/entity-queue
+mkdir -p app/info/seller
+mkdir -p app/info/wholesaler
+mkdir -p app/info/agent
+mkdir -p app/about-us
+mkdir -p app/our-leadership
+mkdir -p app/tools
+mkdir -p app/privacy-policy
+mkdir -p app/terms
+mkdir -p app/help
+mkdir -p app/property-details-admin
+mkdir -p app/upload-contacts
+
+# Create component folders
+mkdir -p components/layout
+mkdir -p components/common
+mkdir -p components/cards
+mkdir -p components/forms
+mkdir -p lib/api
+mkdir -p lib/utils
+mkdir -p types
+
+echo "✅ All folders created"
+
+STEP 5: CREATE PLACEHOLDER PAGES
+This script creates all 41 placeholder pages:
+bash# Create homepage
+cat > app/page.tsx << 'EOF'
+export default function HomePage() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">FlipIQ Marketplace</h1>
+        <p className="text-gray-600">Route: /</p>
+        <p className="text-sm text-gray-400 mt-2">✅ Homepage ready</p>
+      </div>
+    </div>
+  );
+}
+EOF
+
+# Function to create placeholder pages
+create_page() {
+  local path=$1
+  local title=$2
+  local route=$3
+  
+  cat > "$path" << EOF
+export default function ${title}Page() {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">${title}</h1>
+        <p className="text-gray-600">Route: ${route}</p>
+        <p className="text-sm text-gray-400 mt-2">✅ Route configured</p>
+      </div>
+    </div>
+  );
+}
+EOF
+}
+
+# Create all pages
+create_page "app/login/page.tsx" "Login" "/login"
+create_page "app/onboarding/page.tsx" "Onboarding" "/onboarding"
+create_page "app/affiliate/page.tsx" "Affiliate Landing" "/affiliate"
+create_page "app/user/dashboard/page.tsx" "User Dashboard" "/user/dashboard"
+create_page "app/user/profile/page.tsx" "User Profile" "/user/profile"
+create_page "app/user/todos/page.tsx" "To-Dos" "/user/todos"
+create_page "app/user/entities/page.tsx" "Entity Management" "/user/entities"
+create_page "app/user/network/page.tsx" "My Network" "/user/network"
+create_page "app/user/inbox/page.tsx" "Inbox" "/user/inbox"
+create_page "app/user/buy-property/page.tsx" "Find Properties" "/user/buy-property"
+create_page "app/user/my-bids/page.tsx" "My Bids" "/user/my-bids"
+create_page "app/user/buybox/page.tsx" "Buy Box" "/user/buybox"
+create_page "app/user/list-property/page.tsx" "List Property" "/user/list-property"
+create_page "app/user/my-listings/page.tsx" "My Listings" "/user/my-listings"
+create_page "app/user/my-offers/page.tsx" "My Offers" "/user/my-offers"
+create_page "app/user/seller-counter/page.tsx" "Seller Counter" "/user/seller-counter"
+create_page "app/user/counter-bid/page.tsx" "Counter Bid" "/user/counter-bid"
+create_page "app/sell/page.tsx" "My Properties" "/sell"
+create_page "app/sell/add/page.tsx" "Post Property" "/sell/add"
+create_page "app/operator/dashboard/page.tsx" "Operator Dashboard" "/operator/dashboard"
+create_page "app/operator/instant-offer/page.tsx" "Instant Offer" "/operator/instant-offer"
+create_page "app/admin/dashboard/page.tsx" "Admin Dashboard" "/admin/dashboard"
+create_page "app/admin/users/page.tsx" "User Management" "/admin/users"
+create_page "app/admin/entity-queue/page.tsx" "Entity Queue" "/admin/entity-queue"
+create_page "app/info/seller/page.tsx" "Sellers Info" "/info/seller"
+create_page "app/info/wholesaler/page.tsx" "Wholesaler Info" "/info/wholesaler"
+create_page "app/info/agent/page.tsx" "Agent Info" "/info/agent"
+create_page "app/about-us/page.tsx" "About Us" "/about-us"
+create_page "app/our-leadership/page.tsx" "Leadership" "/our-leadership"
+create_page "app/tools/page.tsx" "Tools for Pros" "/tools"
+create_page "app/privacy-policy/page.tsx" "Privacy Policy" "/privacy-policy"
+create_page "app/terms/page.tsx" "Terms of Service" "/terms"
+create_page "app/help/page.tsx" "Help Center" "/help"
+create_page "app/property-details-admin/page.tsx" "Property Admin" "/property-details-admin"
+create_page "app/upload-contacts/page.tsx" "Upload Contacts" "/upload-contacts"
+
+echo "✅ All pages created"
+
+STEP 6: CREATE DYNAMIC ROUTE PAGES
+bash# Property details (buyer view)
+cat > app/user/property-details/\[id\]/page.tsx << 'EOF'
+export default function PropertyDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Property Detail</h1>
+        <p className="text-gray-600">Route: /user/property-details/{params.id}</p>
+        <p className="text-sm text-gray-400 mt-2">✅ Route configured</p>
+      </div>
+    </div>
+  );
+}
+EOF
+
+# Bid details
+cat > app/user/bid-details/\[id\]/page.tsx << 'EOF'
+export default function BidDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Bid Detail</h1>
+        <p className="text-gray-600">Route: /user/bid-details/{params.id}</p>
+        <p className="text-sm text-gray-400 mt-2">✅ Route configured</p>
+      </div>
+    </div>
+  );
+}
+EOF
+
+# Offer details
+cat > app/user/offer-details/\[id\]/page.tsx << 'EOF'
+export default function OfferDetailPage({ params }: { params: { id: string } }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Offer Detail</h1>
+        <p className="text-gray-600">Route: /user/offer-details/{params.id}</p>
+        <p className="text-sm text-gray-400 mt-2">✅ Route configured</p>
+      </div>
+    </div>
+  );
+}
+EOF
+
+# Lender certification
+cat > app/lender/certify/\[token\]/page.tsx << 'EOF'
+export default function LenderCertifyPage({ params }: { params: { token: string } }) {
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-50">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-4">Lender Certification</h1>
+        <p className="text-gray-600">Route: /lender/certify/{params.token}</p>
+        <p className="text-sm text-gray-400 mt-2">✅ Route configured</p>
+      </div>
+    </div>
+  );
+}
+EOF
+
+echo "✅ Dynamic routes created"
+
+STEP 7: CREATE TYPES FILE
+bashcat > types/index.ts << 'EOF'
+// User Types
+export enum UserTier {
+  TIER_0 = 0,
+  TIER_1 = 1,
+  TIER_2 = 2,
+  TIER_3 = 3,
+  TIER_4 = 4,
+}
+
+export enum UserRole {
+  BUYER = "BUYER",
+  SELLER = "SELLER",
+  AGENT = "AGENT",
+  WHOLESALER = "WHOLESALER",
+  OPERATOR = "OPERATOR",
+  ADMIN = "ADMIN",
+}
+
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: UserRole;
+  tier: UserTier;
+  sponsorId?: string;
+}
+
+export interface Property {
+  id: string;
+  address: string;
+  city: string;
+  state: string;
+  zipCode: string;
+  price: number;
+  bedrooms: number;
+  bathrooms: number;
+  squareFeet: number;
+}
+
+export enum BidStatus {
+  NEW = "NEW",
+  VIEWED = "VIEWED",
+  OFFER_SUBMITTED = "OFFER_SUBMITTED",
+  OPEN_ESCROW = "OPEN_ESCROW",
+  CLOSED = "CLOSED",
+}
+EOF
+
+echo "✅ Types created"
+
+STEP 8: VERIFY CORRECT SETUP
+bash# Count pages (should be 41)
+find app -name "page.tsx" | wc -l
+
+# Show structure
+ls -R app/ | grep "page.tsx"
+
+# Verify it's Next.js
+cat package.json | grep "next"
+Expected output:
+
+Count: 41
+package.json shows: "next": "14.x.x" or similar
+NO mention of "vite" or "wouter"
+
+
+STEP 9: TEST IT WORKS
+bash# Install dependencies
+npm install
+
+# Start dev server
+npm run dev
