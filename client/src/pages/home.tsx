@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "wouter";
 import { Search, X, Phone, Mail, Mic, Send, ChevronDown, MessageCircle, MicOff } from "lucide-react";
+import flipiqLogo from "@assets/image_1763691839522.png";
 
 type CtaItem = {
   id: string;
@@ -270,45 +271,7 @@ export default function MinimalistLandingPage() {
       <main className="flex-grow flex flex-col items-center justify-center max-w-6xl mx-auto w-full px-4 text-center">
         {/* Logo */}
         <div className="mb-8 transform hover:scale-105 transition-transform duration-500 flex flex-col items-center">
-           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 280" className="w-64 h-64">
-              {/* House Roof */}
-              <path d="M50 120 L150 40 L250 120" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
-              {/* Chimney */}
-              <path d="M210 60 V90" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" />
-              {/* Walls - Vertical Lines */}
-              <path d="M80 130 V200" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" />
-              <path d="M220 130 V200" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" />
-              
-              {/* Rays */}
-              <line x1="150" y1="10" x2="150" y2="25" stroke="#fb6200" strokeWidth="10" strokeLinecap="round" />
-              <line x1="90" y1="30" x2="105" y2="45" stroke="#fb6200" strokeWidth="10" strokeLinecap="round" />
-              <line x1="210" y1="30" x2="195" y2="45" stroke="#fb6200" strokeWidth="10" strokeLinecap="round" />
-
-              {/* Lightbulb */}
-              <circle cx="150" cy="140" r="35" fill="none" stroke="#fb6200" strokeWidth="10" />
-               {/* Bulb Filament checkmark style */}
-              <path d="M135 135 L150 150 L165 135" fill="none" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
-
-              {/* Bulb Base */}
-              <path d="M135 180 h30" stroke="#0f172a" strokeWidth="10" strokeLinecap="round" />
-              <path d="M135 192 h30" stroke="#0f172a" strokeWidth="10" strokeLinecap="round" />
-              <path d="M140 204 h20" stroke="#0f172a" strokeWidth="10" strokeLinecap="round" />
-              
-              {/* Text "Flip" */}
-              <text x="40" y="260" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="60" fill="#0f172a">Flip</text>
-              
-              {/* Text "iq" with custom Q arrow */}
-              <text x="155" y="260" fontFamily="Arial, sans-serif" fontWeight="bold" fontSize="60" fill="#fb6200">iq</text>
-              
-              {/* Custom Arrow for 'q' tail */}
-               <defs>
-                <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
-                  <polygon points="0 0, 10 3.5, 0 7" fill="#fb6200" />
-                </marker>
-              </defs>
-              {/* Drawing the arrow on the q */}
-              <line x1="205" y1="260" x2="215" y2="270" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" markerEnd="url(#arrowhead)" />
-            </svg>
+           <img src={flipiqLogo} alt="FlipIQ Logo" className="w-64 h-auto object-contain" />
         </div>
 
         {/* Tagline */}
