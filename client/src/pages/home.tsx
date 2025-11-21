@@ -271,16 +271,16 @@ export default function MinimalistLandingPage() {
         {/* Logo */}
         <div className="mb-6 transform hover:scale-105 transition-transform duration-500">
            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className="w-40 h-40 mx-auto">
-              <path d="M20 100 L100 30 L180 100" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
+              <path d="M20 100 L100 30 L180 100" fill="none" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round"/>
               <rect x="140" y="50" width="20" height="40" fill="#fb6200" />
-              <path d="M40 100 V160 M160 100 V160" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" />
-              <circle cx="100" cy="110" r="30" fill="none" stroke="#fb6200" strokeWidth="10" />
-              <path d="M100 110 m-10 0 a 10 10 0 0 1 20 0" fill="none" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
-              <path d="M90 150 h20 M90 160 h20" stroke="#0f172a" strokeWidth="8" strokeLinecap="round" />
-              <path d="M95 170 h10" stroke="#0f172a" strokeWidth="8" strokeLinecap="round" />
-              <line x1="100" y1="10" x2="100" y2="20" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
-              <line x1="50" y1="30" x2="60" y2="40" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
-              <line x1="150" y1="30" x2="140" y2="40" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
+              <path d="M40 100 V160 M160 100 V160" fill="none" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
+              <circle cx="100" cy="110" r="30" fill="none" stroke="#fb6200" strokeWidth="8" />
+              <path d="M100 110 m-10 0 a 10 10 0 0 1 20 0" fill="none" stroke="#fb6200" strokeWidth="6" strokeLinecap="round" />
+              <path d="M90 150 h20 M90 160 h20" stroke="#0f172a" strokeWidth="6" strokeLinecap="round" />
+              <path d="M95 170 h10" stroke="#0f172a" strokeWidth="6" strokeLinecap="round" />
+              <line x1="100" y1="10" x2="100" y2="20" stroke="#fb6200" strokeWidth="6" strokeLinecap="round" />
+              <line x1="50" y1="30" x2="60" y2="40" stroke="#fb6200" strokeWidth="6" strokeLinecap="round" />
+              <line x1="150" y1="30" x2="140" y2="40" stroke="#fb6200" strokeWidth="6" strokeLinecap="round" />
             </svg>
             <h1 className="text-6xl font-bold text-slate-900 mt-2">
               Flip<span className="text-[#fb6200]">iq</span>
