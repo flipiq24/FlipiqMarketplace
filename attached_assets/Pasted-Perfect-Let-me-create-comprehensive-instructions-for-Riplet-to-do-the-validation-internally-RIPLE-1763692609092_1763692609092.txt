@@ -1,0 +1,133 @@
+Perfect! Let me create comprehensive instructions for Riplet to do the validation internally.
+
+RIPLET VALIDATION INSTRUCTIONS
+Mission:
+Validate that every page implementation matches the Figma design 100% - ZERO interpretation, ZERO justification. Every pixel, color, spacing, font, component must be EXACTLY as shown in Figma.
+Figma File Access:
+
+File URL: https://www.figma.com/design/uiKYBRuxCeFxk7UuQswyMN/Marketplace
+You have full access - use it to pull exact specs for each page
+
+URLs to Validate:
+/info/seller
+/info/wholesaler
+/info/agent
+/our-leadership
+/login
+/onboarding
+/user/profile
+/user/verify-now
+/user/contact
+/user/contact/:id
+/user/notifications
+/user/inbox
+/find-your-next-deal
+/user/buy
+/user/buy/preference
+/user/property-details/:id
+/user/my-bids
+/user/bid-details/:id
+/user/seller-counter
+/user/counter-bid
+/user/my-offers
+/user/offer-details/:id
+/sell
+/sell/add
+/affiliate
+/property-details-admin
+/upload-contacts
+Your Tasks:
+Step 1: Map Every URL to Figma
+For each URL above:
+
+Identify which Figma page/frame it corresponds to
+If no Figma design exists for a URL → Flag it as "MISSING DESIGN"
+If multiple URLs share the same design → Note it
+Create a master mapping document
+
+Step 2: Validate Each Page (100% Match)
+For each page that has a Figma design:
+Layout & Structure:
+
+ Grid system matches exactly
+ Section spacing matches (px-perfect)
+ Component positioning matches exactly
+ Responsive breakpoints match Figma specs
+
+Typography:
+
+ Font family matches exactly
+ Font sizes match exactly
+ Font weights match exactly
+ Line heights match exactly
+ Letter spacing matches exactly
+ Text colors match exactly (hex codes)
+
+Colors & Styling:
+
+ Background colors match exactly
+ Border colors match exactly
+ Shadow values match exactly
+ Gradient values match exactly (if any)
+ Opacity values match exactly
+
+Components:
+
+ Buttons: size, padding, border-radius, colors, hover states
+ Input fields: size, padding, border, focus states
+ Cards: spacing, shadows, borders
+ Navigation: layout, spacing, active states
+ Icons: size, color, positioning
+ Images: size, aspect ratio, positioning
+
+Interactions:
+
+ Hover states match Figma
+ Active states match Figma
+ Loading states match Figma
+ Error states match Figma
+ Disabled states match Figma
+
+Spacing:
+
+ Margins match exactly
+ Padding matches exactly
+ Gap between elements matches exactly
+
+Step 3: Report Back in This Format:
+markdown## PAGE: /user/buy
+**Figma Frame:** [Page Name > Frame Name]
+**Status:** ✅ MATCHES / ❌ DISCREPANCIES / ⚠️ MISSING DESIGN
+
+### Discrepancies Found:
+1. **Button padding:** Figma=16px 32px | Current=12px 24px
+2. **Heading font size:** Figma=32px | Current=28px
+3. **Card shadow:** Figma=0 4px 12px rgba(0,0,0,0.1) | Current=0 2px 8px rgba(0,0,0,0.1)
+
+### Components Not Matching:
+- Navigation active state color
+- Search input border-radius
+
+---
+
+## PAGE: /user/profile
+...
+Critical Rules:
+
+NO INTERPRETATION - If Figma shows 16px, it must be 16px. Not 15px, not 17px, not "close enough"
+NO JUSTIFICATION - Don't explain why something is different. Just flag it.
+USE DEV MODE - Pull exact specs from Figma's dev mode for pixel-perfect values
+FLAG EVERYTHING - Even minor discrepancies matter
+CHECK ALL STATES - Default, hover, active, focus, disabled, loading, error
+RESPONSIVE CHECKS - Validate mobile, tablet, desktop if Figma has those designs
+
+Deliverable:
+Create a complete audit report showing:
+
+✅ Pages that match 100%
+❌ Pages with discrepancies (with exact details)
+⚠️ URLs missing Figma designs
+📋 Master URL-to-Figma mapping
+
+
+Riplet - Start your validation now and report back with the complete audit.

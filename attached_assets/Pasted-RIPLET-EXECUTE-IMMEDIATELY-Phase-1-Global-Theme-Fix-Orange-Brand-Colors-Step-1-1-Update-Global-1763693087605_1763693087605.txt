@@ -1,0 +1,229 @@
+RIPLET - EXECUTE IMMEDIATELY
+Phase 1: Global Theme Fix (Orange Brand Colors)
+Step 1.1: Update Global CSS Variables
+File: client/src/index.css
+Pull the EXACT color palette from Figma and update:
+css:root {
+  /* PRIMARY - FlipIQ Orange #fb6200 */
+  --primary: 23.4 100% 49.2%;
+  --primary-foreground: 0 0% 100%;
+  
+  /* Pull ALL other colors from Figma Design System */
+  --background: [GET FROM FIGMA];
+  --foreground: [GET FROM FIGMA];
+  --card: [GET FROM FIGMA];
+  --card-foreground: [GET FROM FIGMA];
+  --muted: [GET FROM FIGMA];
+  --muted-foreground: [GET FROM FIGMA];
+  --accent: [GET FROM FIGMA];
+  --accent-foreground: [GET FROM FIGMA];
+  
+  /* Get exact values from Figma's design tokens/variables */
+}
+```
+
+**Instructions:**
+1. Open Figma file: https://www.figma.com/design/uiKYBRuxCeFxk7UuQswyMN/Marketplace
+2. Check for a "Design System" or "Colors" page
+3. Extract EVERY color token
+4. Convert to HSL format
+5. Update the CSS variables
+
+### **Step 1.2: Remove ALL Hardcoded Colors**
+Search entire codebase for:
+- `text-blue-600` → Replace with `text-primary`
+- Any `red` values → Replace with Figma-specified colors
+- Any hardcoded hex colors → Replace with CSS variables
+
+---
+
+## **Phase 2: Layout Unification (Match Figma Exactly)**
+
+### **Step 2.1: Audit Figma for Layout System**
+**Action Required:**
+1. Go to Figma and identify the **Header/Navigation component**
+2. Note EXACT specs:
+   - Height
+   - Background color
+   - Logo size and position
+   - Navigation items and spacing
+   - Search bar (if present) - size, position
+   - User menu/profile area
+   - Mobile responsive behavior
+
+### **Step 2.2: Rebuild Header Component**
+**File:** `client/src/components/Header.tsx`
+
+**Requirements:**
+- [ ] Match Figma Header EXACTLY
+- [ ] Logo: exact size from Figma
+- [ ] Navigation items: exact spacing from Figma
+- [ ] Colors: Orange brand (#fb6200) where Figma shows
+- [ ] Typography: exact font sizes, weights from Figma
+- [ ] Hover states: match Figma exactly
+- [ ] Mobile menu: match Figma exactly (if exists)
+
+**Pull from Figma Dev Mode:**
+```
+Header:
+- Height: [GET FROM FIGMA] px
+- Padding: [GET FROM FIGMA]
+- Background: [GET FROM FIGMA]
+- Border-bottom: [GET FROM FIGMA]
+
+Logo:
+- Width: [GET FROM FIGMA] px
+- Height: [GET FROM FIGMA] px
+
+Nav Items:
+- Font-size: [GET FROM FIGMA]
+- Font-weight: [GET FROM FIGMA]
+- Gap: [GET FROM FIGMA]
+- Padding: [GET FROM FIGMA]
+```
+
+### **Step 2.3: Create/Update Layout Components**
+
+**Check Figma for these layout patterns:**
+- Public pages layout
+- Authenticated user layout
+- Admin layout (if separate)
+
+**Files to update:**
+- `client/src/components/layouts/PublicLayout.tsx`
+- `client/src/components/layouts/AuthenticatedLayout.tsx` (create if needed)
+
+**Match Figma exactly:**
+- [ ] Header placement and styling
+- [ ] Footer placement and styling (if exists)
+- [ ] Sidebar (if exists)
+- [ ] Max-width containers
+- [ ] Padding/margins
+- [ ] Background colors
+
+---
+
+## **Phase 3: Page-by-Page Figma Matching**
+
+For EACH page, you must:
+
+### **Step 3.1: Find the Exact Figma Frame**
+1. Open Figma
+2. Locate the frame for the URL
+3. Switch to Dev Mode
+4. Document the frame path (e.g., "Buyer View > Dashboard")
+
+### **Step 3.2: Extract ALL Specs**
+For each section/component on the page:
+
+**Layout:**
+```
+Container:
+- Max-width: [FIGMA VALUE]
+- Padding: [FIGMA VALUE]
+- Margin: [FIGMA VALUE]
+- Gap: [FIGMA VALUE]
+```
+
+**Typography:**
+```
+Heading:
+- Font-family: [FIGMA VALUE]
+- Font-size: [FIGMA VALUE]
+- Font-weight: [FIGMA VALUE]
+- Line-height: [FIGMA VALUE]
+- Color: [FIGMA VALUE]
+```
+
+**Components:**
+```
+Button:
+- Padding: [FIGMA VALUE]
+- Border-radius: [FIGMA VALUE]
+- Font-size: [FIGMA VALUE]
+- Background: [FIGMA VALUE]
+- Hover state: [FIGMA VALUE]
+```
+
+### **Step 3.3: Implement With ZERO Deviation**
+
+**Critical Rules:**
+1. If Figma shows 24px, use 24px - NOT 1.5rem unless you verify it equals exactly 24px
+2. If Figma shows #fb6200, use exactly #fb6200
+3. If Figma shows "Satoshi" font, use exactly "Satoshi"
+4. If Figma shows 600 font-weight, use exactly 600
+5. NO rounding, NO "close enough", NO interpretation
+
+---
+
+## **Phase 4: Immediate Action Items**
+
+### **Priority 1: Fix These Pages NOW**
+
+1. **`/` (Home Page)**
+   - Figma Frame: [FIND IT]
+   - Remove inline styles
+   - Use global theme tokens
+   - Match Figma 100%
+
+2. **`/user/buy-property`**
+   - Figma Frame: [FIND IT - likely "Buyer View" or "Dashboard"]
+   - Remove duplicate header
+   - Use global layout
+   - Match Figma 100%
+
+3. **`/our-leadership`**
+   - Figma Frame: [FIND IT]
+   - Remove duplicate header
+   - Use global layout
+   - Match Figma 100%
+
+4. **`/tools`**
+   - Figma Frame: [FIND IT]
+   - Remove duplicate header
+   - Use global layout
+   - Match Figma 100%
+
+5. **`/user/profile`**
+   - Figma Frame: [FIND IT - should be "Profile & Settings"]
+   - Build complete page from Figma
+   - Match Figma 100%
+
+### **Priority 2: Verify These Exist in Figma**
+
+For each URL, report back:
+- ✅ Figma frame found at: [path]
+- ❌ No Figma design exists
+- ⚠️ Partial design (specify what's missing)
+```
+/info/seller → [?]
+/info/wholesaler → [?]
+/info/agent → [?]
+/login → [?]
+/onboarding → [?]
+/user/notifications → [?]
+/user/inbox → [?]
+/find-your-next-deal → [?]
+/user/my-bids → [?]
+/sell → [?]
+/sell/add → [?]
+
+Execution Checklist:
+
+ Update global CSS with Orange brand colors from Figma
+ Extract complete color palette from Figma
+ Remove ALL hardcoded colors (blue, red, etc.)
+ Rebuild Header to match Figma exactly
+ Update layouts to match Figma exactly
+ Fix Home page - match Figma 100%
+ Fix Buy Property page - match Figma 100%
+ Fix Leadership page - match Figma 100%
+ Fix Tools page - match Figma 100%
+ Build Profile page - match Figma 100%
+ Remove all Next.js artifacts
+ Map all URLs to Figma frames
+ Report any missing Figma designs
+
+
+RIPLET - BEGIN EXECUTION NOW. Report progress every 30 minutes with specific changes made and Figma specs used.
+REMEMBER: 100% Figma match. ZERO interpretation. ZERO justification. If you can't find something in Figma, STOP and ASK.RetryTo run code, enable code execution and file creation in Settings > Capabilities.

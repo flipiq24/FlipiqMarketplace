@@ -1,0 +1,123 @@
+STOP - CRITICAL CORRECTION NEEDED
+Riplet - I need you to PAUSE before execution.
+Problem with Your Plan:
+You said: "I will use the provided specs and standard Tailwind patterns where explicit Figma access is pending."
+THIS IS NOT ACCEPTABLE
+The requirement is 100% Figma match - ZERO interpretation. You have FULL ACCESS to Figma, so there should be NO "standard Tailwind patterns" or guessing.
+
+CORRECTED EXECUTION PLAN:
+Phase 0: FIGMA AUDIT FIRST (Required Before Any Code)
+Before you write a single line of code, you MUST:
+
+Open the Figma file: https://www.figma.com/design/uiKYBRuxCeFxk7UuQswyMN/Marketplace
+Document EXACT specs for:
+Header Component:
+
+Go to Figma Dev Mode
+Find the Header/Navigation component
+Extract exact values:
+
+
+
+     Height: ___ px
+     Background color: ___ (hex/HSL)
+     Logo width: ___ px
+     Logo height: ___ px
+     Navigation item font-size: ___ px
+     Navigation item font-weight: ___
+     Navigation item spacing/gap: ___ px
+     Navigation item padding: ___ px
+     Active state color: ___
+     Hover state color: ___
+     Border/shadow: ___
+Typography System:
+
+Find the typography/text styles in Figma
+Document ALL heading levels (H1-H6)
+Document body text styles
+Document font families used
+
+     H1: font-size ___ | font-weight ___ | line-height ___ | color ___
+     H2: font-size ___ | font-weight ___ | line-height ___ | color ___
+     Body: font-size ___ | font-weight ___ | line-height ___ | color ___
+Color Palette (Complete):
+
+Not just primary orange
+Get ALL colors from Figma
+
+     Primary: #fb6200 (confirmed)
+     Secondary: ___
+     Background: ___
+     Surface/Card: ___
+     Text Primary: ___
+     Text Secondary: ___
+     Border: ___
+     Success: ___
+     Error: ___
+     Warning: ___
+Spacing System:
+
+Check if Figma has a spacing scale (4px, 8px, 16px, 24px, etc.)
+Document container max-widths
+Document standard padding values
+
+Button Styles:
+
+Primary button: padding, border-radius, font-size, colors, hover states
+Secondary button: (if exists)
+Text button: (if exists)
+
+
+Map Pages to Figma Frames:
+For EACH of these pages, find the exact Figma frame:
+
+   / (Home) → Figma frame path: ___
+   /our-leadership → Figma frame path: ___
+   /tools → Figma frame path: ___
+   /user/buy-property → Figma frame path: ___
+   /user/profile → Figma frame path: ___
+If a frame doesn't exist, report: "❌ NO FIGMA DESIGN FOUND"
+
+ONLY AFTER Phase 0 is Complete:
+Then proceed with:
+
+Phase 1: Apply EXACT colors from Figma audit
+Phase 2: Build Header with EXACT specs from Figma audit
+Phase 3: Build pages with EXACT specs from Figma audit
+
+
+Response Format Required:
+Before any code execution, provide this audit report:
+markdown# FIGMA AUDIT REPORT
+
+## Header Component
+- Height: 80px
+- Background: #FFFFFF
+- Logo: 140px × 40px
+- Nav Font: 16px / 600 weight / 24px gap
+- Active State: #fb6200
+- Hover State: #fb6200 with 0.8 opacity
+- [Continue with ALL specs]
+
+## Typography System
+- H1: 48px / 700 / 56px line-height / #000000
+- H2: 36px / 700 / 44px line-height / #000000
+- [Continue with ALL text styles]
+
+## Complete Color Palette
+- Primary: #fb6200 (23.4 100% 49.2%)
+- Background: [value from Figma]
+- [Continue with ALL colors]
+
+## Page Mapping
+- / → Found at: "Landing Page" frame
+- /our-leadership → Found at: "About > Leadership" frame
+- /user/buy-property → Found at: "Buyer Dashboard" frame
+- [Continue with ALL pages]
+
+## Missing Designs
+- ❌ /login - No Figma frame found
+- [List any missing]
+
+Riplet - Complete Phase 0 (Figma Audit) FIRST. Do NOT write any code until you've extracted exact specs from Figma.
+Report back with the complete audit, then await approval before execution.
