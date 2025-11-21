@@ -1,9 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "wouter";
-import { Phone, Mail, MessageCircle, X, Send, Mic, MicOff, Search, ChevronDown } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { Search, X, Phone, Mail, Mic, Send, ChevronDown, MessageCircle, MicOff } from "lucide-react";
 
-// CTA Data mapping
-const ctaData = [
+type CtaItem = {
+  id: string;
+  text: string;
+  description: string;
+  placeholder: string;
+};
+
+const ctaData: CtaItem[] = [
   {
     id: "sell",
     text: "Sell a Property",
@@ -19,180 +25,299 @@ const ctaData = [
   {
     id: "find",
     text: "Find Your Next Deal!",
-    description: "Discover real, validated on- and off-market deals tailored to your preferences. No memberships, no fees.",
+    description:
+      "Discover real, validated on- and off-market deals tailored to your preferences. No memberships, no fees.",
     placeholder: "Enter a city, county, or state to find properties.",
   },
 ];
 
-export default function HomePage() {
+export default function MinimalistLandingPage() {
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [placeholder, setPlaceholder] = useState("Enter a property address to get started");
+  const [isAddressSectionActive, setIsAddressSectionActive] = useState(false);
+  const [showModal, setShowModal] = useState(false);
   const [showSupportModal, setShowSupportModal] = useState(false);
-  const [showAboutDropdown, setShowAboutDropdown] = useState(false);
-
-  // Chatbot logic
   const [showChatBot, setShowChatBot] = useState(false);
+  const [hideBanner, setHideBanner] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState<{id: number, text: string, isUser: boolean}[]>([]);
   const [chatMessage, setChatMessage] = useState("");
+  const [chatMessages, setChatMessages] = useState<Array<{ id: number; text: string; isUser: boolean }>>([]);
   const [isListening, setIsListening] = useState(false);
+  const [showLoginDropdown, setShowLoginDropdown] = useState(false);
+  const [showAboutDropdown, setShowAboutDropdown] = useState(false);
+  const [, setLocation] = useLocation();
 
   useEffect(() => {
-    const timer = setTimeout(() => setShowChatBot(true), 3000);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => {
+      setShowChatBot(true);
+    }, 3000); // Show after 3 seconds
+
+    const bannerTimer = setTimeout(() => {
+      setHideBanner(true);
+    }, 30000); // Hide banner after 30 seconds
+
+    return () => {
+      clearTimeout(timer);
+      clearTimeout(bannerTimer);
+    };
   }, []);
+
+  const handleButtonClick = (newPlaceholder: string, buttonId?: string) => {
+    setPlaceholder(newPlaceholder);
+    setIsAddressSectionActive(true);
+
+    if (buttonId === "find") {
+      // Small delay to show the address section activation, then redirect
+      setTimeout(() => {
+        setLocation("/user/buy-property");
+      }, 500);
+    }
+  };
+
+  const handleFindOutMore = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowModal(true);
+  };
+
+  const handleSupportClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowSupportModal(true);
+  };
 
   const handleChatSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!chatMessage.trim()) return;
-    
-    const newMessage = { id: Date.now(), text: chatMessage, isUser: true };
-    setChatMessages(prev => [...prev, newMessage]);
-    setChatMessage("");
-    
-    setTimeout(() => {
-      setChatMessages(prev => [...prev, {
-        id: Date.now() + 1,
-        text: "Thanks for your message! Our support team will get back to you shortly.",
-        isUser: false
-      }]);
-    }, 1000);
+    if (chatMessage.trim()) {
+      const newMessage = {
+        id: Date.now(),
+        text: chatMessage,
+        isUser: true,
+      };
+      setChatMessages((prev) => [...prev, newMessage]);
+
+      // Simulate bot response
+      setTimeout(() => {
+        const botResponse = {
+          id: Date.now() + 1,
+          text: "Thanks for your message! Our support team will get back to you shortly. You can also call us at 1 (844) 435 4795 or email Support@flipiq.com for immediate assistance.",
+          isUser: false,
+        };
+        setChatMessages((prev) => [...prev, botResponse]);
+      }, 1000);
+
+      setChatMessage("");
+    }
   };
 
-  const toggleVoiceInput = () => {
-    setIsListening(!isListening);
-    // Mock voice input logic
+  const handleVoiceInput = () => {
+    if ("webkitSpeechRecognition" in window || "SpeechRecognition" in window) {
+      const SpeechRecognition = (window as any).webkitSpeechRecognition || (window as any).SpeechRecognition;
+      const recognition = new SpeechRecognition();
+
+      recognition.continuous = false;
+      recognition.interimResults = false;
+      recognition.lang = "en-US";
+
+      recognition.onstart = () => {
+        setIsListening(true);
+      };
+
+      recognition.onresult = (event: any) => {
+        const transcript = event.results[0][0].transcript;
+        setChatMessage(transcript);
+        setIsListening(false);
+      };
+
+      recognition.onerror = () => {
+        setIsListening(false);
+      };
+
+      recognition.onend = () => {
+        setIsListening(false);
+      };
+
+      recognition.start();
+    } else {
+      alert("Speech recognition is not supported in your browser.");
+    }
   };
 
   return (
-    <div className="bg-white min-h-screen flex flex-col font-sans">
-      {/* Header */}
-      <header className="w-full flex justify-between items-center px-8 py-6">
-        {/* Left: Contact Info */}
-        <div className="flex flex-col space-y-1 text-slate-700 text-sm">
+    <div className="bg-white min-h-screen flex flex-col font-sans p-6 sm:p-8 md:p-12">
+      <header className="w-full flex justify-between items-center mb-12">
+        <div className="flex flex-col space-y-1 text-slate-700">
           <div className="flex items-center space-x-2">
-            <Phone className="w-4 h-4 text-[#fb6200]" />
-            <a href="tel:18444354795" className="font-medium hover:text-[#fb6200] transition-colors">
+            <Phone className="w-5 h-5 text-orange-500" />
+            <a
+              href="tel:18444354795"
+              className="text-lg font-semibold hover:text-orange-500 transition-colors duration-300"
+            >
               1 (844) 435 4795
             </a>
           </div>
           <div className="flex items-center space-x-2">
-            <Mail className="w-4 h-4 text-[#fb6200]" />
-            <a href="mailto:Support@flipiq.com" className="font-medium hover:text-[#fb6200] transition-colors">
+            <Mail className="w-5 h-5 text-orange-500" />
+            <button
+              onClick={handleSupportClick}
+              className="text-lg font-semibold hover:text-orange-500 transition-colors duration-300 cursor-pointer"
+            >
               Support@flipiq.com
-            </a>
+            </button>
           </div>
         </div>
 
-        {/* Right: Navigation */}
-        <div className="flex items-center space-x-8">
-          {/* About Us Dropdown */}
-          <div 
+        <div className="flex items-center space-x-6">
+          <div
             className="relative group"
             onMouseEnter={() => setShowAboutDropdown(true)}
             onMouseLeave={() => setShowAboutDropdown(false)}
           >
-            <button className="flex items-center space-x-1 text-slate-700 font-medium hover:text-[#fb6200] transition-colors">
-              <span>About Us</span>
-              <ChevronDown className={`w-4 h-4 transition-transform ${showAboutDropdown ? 'rotate-180' : ''}`} />
-            </button>
-            
-            {showAboutDropdown && (
-              <div className="absolute top-full right-0 mt-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
-                <Link href="/about-us">
-                  <a className="block px-4 py-2 text-slate-700 hover:bg-orange-50 hover:text-[#fb6200]">About Us</a>
-                </Link>
-                <Link href="/our-leadership">
-                  <a className="block px-4 py-2 text-slate-700 hover:bg-orange-50 hover:text-[#fb6200]">Leadership</a>
-                </Link>
+            <Link href="/about-us">
+              <a className="text-lg font-medium text-slate-700 hover:text-orange-500 transition-colors duration-300 px-4 py-2 rounded-lg hover:bg-orange-50 flex items-center space-x-1">
+                <span>About Us</span>
+                <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showAboutDropdown ? "rotate-180" : ""}`} />
+              </a>
+            </Link>
+
+            <div
+              className={`absolute top-full left-0 mt-2 w-48 transition-all duration-300 transform origin-top-left z-50 ${
+                showAboutDropdown
+                  ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              }`}
+            >
+              <div className="bg-white rounded-xl shadow-2xl border border-gray-200 py-2">
+                <div className="px-4 py-2 bg-gradient-to-r from-orange-50 to-orange-100 border-b border-orange-200 rounded-t-xl">
+                  <p className="text-sm font-semibold text-orange-800">Learn More About FlipIQ</p>
+                </div>
+
+                <div className="py-1">
+                  <Link href="/about-us">
+                    <a
+                      className="group flex items-center px-4 py-3 text-slate-700 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 hover:text-orange-700 transition-all duration-200 font-medium"
+                      onClick={() => setShowAboutDropdown(false)}
+                    >
+                      <span className="flex-1">About Us</span>
+                    </a>
+                  </Link>
+                  <Link href="/our-leadership">
+                    <a
+                      className="group flex items-center px-4 py-3 text-slate-700 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 hover:text-orange-700 transition-all duration-200 font-medium rounded-b-xl"
+                      onClick={() => setShowAboutDropdown(false)}
+                    >
+                      <span className="flex-1">Leadership</span>
+                    </a>
+                  </Link>
+                </div>
               </div>
-            )}
+            </div>
           </div>
 
           <Link href="/tools">
-            <a className="text-slate-700 font-medium hover:text-[#fb6200] transition-colors">
+            <a className="text-lg font-medium text-slate-700 hover:text-orange-500 transition-colors duration-300 px-4 py-2 rounded-lg hover:bg-orange-50">
               Tools for Pros
             </a>
           </Link>
 
-          <Link href="/login">
-            <a className="bg-[#fb6200] hover:bg-[#e55a00] text-white px-6 py-2.5 rounded-md font-semibold transition-all shadow-sm">
-              Log In
-            </a>
-          </Link>
+          <div
+            className="relative group"
+            onMouseEnter={() => setShowLoginDropdown(true)}
+            onMouseLeave={() => setShowLoginDropdown(false)}
+          >
+            <button className="bg-gradient-to-r from-orange-500 to-orange-600 hover:from-orange-600 hover:to-orange-700 text-white px-6 py-2 rounded-lg font-semibold transition-all duration-300 hover:shadow-lg transform hover:scale-105 flex items-center space-x-2">
+              <span>Log In</span>
+              <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${showLoginDropdown ? "rotate-180" : ""}`} />
+            </button>
+
+            <div
+              className={`absolute top-full right-0 mt-2 w-64 transition-all duration-300 transform origin-top-right z-50 ${
+                showLoginDropdown
+                  ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
+                  : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+              }`}
+            >
+              <div className="bg-white rounded-xl shadow-2xl border border-gray-200 py-2">
+                <div className="px-4 py-2 bg-gradient-to-r from-orange-50 to-orange-100 border-b border-orange-200 rounded-t-xl">
+                  <p className="text-sm font-semibold text-orange-800">Choose Your Platform</p>
+                </div>
+
+                <div className="py-1">
+                  <a
+                    href="https://app.flipiq.com/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center px-4 py-3 text-slate-700 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 hover:text-orange-700 transition-all duration-200 font-medium"
+                    onClick={() => setShowLoginDropdown(false)}
+                  >
+                    <span className="flex-1">Marketplace</span>
+                  </a>
+                  <a
+                    href="https://platform.flipiq.com/login"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group flex items-center px-4 py-3 text-slate-700 hover:bg-gradient-to-r hover:from-orange-50 hover:to-orange-100 hover:text-orange-700 transition-all duration-200 font-medium"
+                    onClick={() => setShowLoginDropdown(false)}
+                  >
+                    <span className="flex-1">Platform</span>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* Hero Section */}
-      <main className="flex-grow flex flex-col items-center justify-center px-4 mt-12 md:mt-20">
-        <div className="max-w-4xl w-full text-center space-y-10">
-          
-          {/* Logo */}
-          <div className="flex justify-center mb-4">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className="w-48 h-48">
-              {/* House Roof */}
+      {/* Main Content */}
+      <main className="flex-grow flex flex-col items-center justify-center max-w-6xl mx-auto w-full px-4 text-center">
+        {/* Logo */}
+        <div className="mb-6 transform hover:scale-105 transition-transform duration-500">
+           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className="w-40 h-40 mx-auto">
               <path d="M20 100 L100 30 L180 100" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" strokeLinejoin="round"/>
-              {/* Chimney */}
               <rect x="140" y="50" width="20" height="40" fill="#fb6200" />
-              {/* Walls */}
               <path d="M40 100 V160 M160 100 V160" fill="none" stroke="#fb6200" strokeWidth="12" strokeLinecap="round" />
-              
-              {/* Lightbulb */}
               <circle cx="100" cy="110" r="30" fill="none" stroke="#fb6200" strokeWidth="10" />
               <path d="M100 110 m-10 0 a 10 10 0 0 1 20 0" fill="none" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
               <path d="M90 150 h20 M90 160 h20" stroke="#0f172a" strokeWidth="8" strokeLinecap="round" />
               <path d="M95 170 h10" stroke="#0f172a" strokeWidth="8" strokeLinecap="round" />
-              
-              {/* Rays */}
               <line x1="100" y1="10" x2="100" y2="20" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
               <line x1="50" y1="30" x2="60" y2="40" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
               <line x1="150" y1="30" x2="140" y2="40" stroke="#fb6200" strokeWidth="8" strokeLinecap="round" />
             </svg>
-          </div>
-          
-          <h1 className="text-6xl font-bold text-slate-900 tracking-tight">
-            Flip<span className="text-[#fb6200]">iq</span>
-          </h1>
+            <h1 className="text-6xl font-bold text-slate-900 mt-2">
+              Flip<span className="text-[#fb6200]">iq</span>
+            </h1>
+        </div>
 
-          {/* Tagline */}
-          <h2 className="text-3xl font-bold text-slate-800 max-w-3xl mx-auto leading-tight">
-            Powerful AI Tools for <span className="text-[#fb6200]">Smart</span>
-            <br />
-            Agents, Wholesalers, Investors, and Buyers
-          </h2>
+        {/* Tagline */}
+        <h2 className="text-2xl md:text-3xl font-bold text-slate-800 mb-10 leading-tight max-w-3xl">
+          Powerful AI Tools for <span className="text-[#fb6200]">Smart</span> Agents, Wholesalers, Investors, and Buyers
+        </h2>
 
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto w-full relative group">
-            <input 
-              type="text" 
-              placeholder="Enter a property address to get started" 
-              className="w-full px-8 py-4 rounded-full border border-gray-200 shadow-sm text-lg focus:outline-none focus:ring-2 focus:ring-[#fb6200] focus:border-transparent transition-all placeholder:text-gray-400"
-            />
-            <button className="absolute right-3 top-1/2 transform -translate-y-1/2 p-2 text-gray-400 hover:text-[#fb6200] transition-colors">
-              <Search className="w-6 h-6" />
+        {/* Search Bar */}
+        <div className={`w-full max-w-3xl mb-12 relative transition-all duration-500 ${isAddressSectionActive ? 'scale-105 ring-4 ring-orange-100 rounded-full' : ''}`}>
+           <input
+            type="text"
+            placeholder={placeholder}
+            className="w-full px-8 py-4 rounded-full border border-gray-200 shadow-lg text-lg focus:outline-none focus:border-[#fb6200] focus:ring-2 focus:ring-[#fb6200] transition-all text-slate-700 placeholder:text-slate-400"
+            autoFocus={isAddressSectionActive}
+          />
+          <button className="absolute right-2 top-2 bg-[#fb6200] p-2.5 rounded-full text-white hover:bg-[#e55a00] transition-colors">
+            <Search className="w-6 h-6" />
+          </button>
+        </div>
+
+        {/* CTA Buttons */}
+        <div className="flex flex-wrap justify-center gap-6 w-full">
+          {ctaData.map((item) => (
+            <button
+              key={item.id}
+              onClick={() => handleButtonClick(item.placeholder, item.id)}
+              onMouseEnter={() => setHoveredButton(item.id)}
+              onMouseLeave={() => setHoveredButton(null)}
+              className="bg-[#fb6200] hover:bg-[#e55a00] text-white px-8 py-4 rounded-xl font-bold text-lg shadow-md hover:shadow-xl transition-all transform hover:-translate-y-1 min-w-[220px]"
+            >
+              {item.text}
             </button>
-          </div>
-
-          {/* Action Buttons */}
-          <div className="flex flex-wrap justify-center gap-6 mt-8">
-            <Link href="/sell">
-              <a className="bg-[#fb6200] hover:bg-[#e55a00] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 min-w-[200px]">
-                Sell a Property
-              </a>
-            </Link>
-            
-            <Link href="/tools">
-              <a className="bg-[#fb6200] hover:bg-[#e55a00] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 min-w-[200px]">
-                Comp with AI
-              </a>
-            </Link>
-            
-            <Link href="/user/buy-property">
-              <a className="bg-[#fb6200] hover:bg-[#e55a00] text-white px-8 py-4 rounded-xl font-semibold text-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5 min-w-[200px]">
-                Find Your Next Deal!
-              </a>
-            </Link>
-          </div>
-
+          ))}
         </div>
       </main>
 
@@ -201,30 +326,34 @@ export default function HomePage() {
         <div className="fixed bottom-6 right-6 z-50">
           <button
             onClick={() => setIsChatOpen(!isChatOpen)}
-            className="bg-[#fb6200] hover:bg-[#e55a00] text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all hover:scale-105"
+            className="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-110"
           >
             {isChatOpen ? <X className="w-6 h-6" /> : <MessageCircle className="w-6 h-6" />}
           </button>
 
           {isChatOpen && (
-            <div className="absolute bottom-20 right-0 w-80 bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden animate-in slide-in-from-bottom-4 fade-in duration-300">
-              <div className="bg-[#fb6200] p-4 text-white flex justify-between items-center">
-                <span className="font-bold">FlipIQ Support</span>
-                <button onClick={() => setIsChatOpen(false)}><X className="w-4 h-4" /></button>
+            <div className="absolute bottom-20 right-0 w-96 bg-white rounded-2xl shadow-2xl border border-gray-200 overflow-hidden animate-in slide-in-from-bottom-4 duration-300">
+              <div className="bg-gradient-to-r from-orange-500 to-orange-600 p-4 text-white flex justify-between items-center">
+                <div className="flex items-center space-x-2">
+                  <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
+                    <MessageCircle className="w-5 h-5" />
+                  </div>
+                  <span className="font-bold">FlipIQ Support</span>
+                </div>
               </div>
               
-              <div className="h-64 overflow-y-auto p-4 space-y-3 bg-gray-50">
+              <div className="h-80 overflow-y-auto p-4 space-y-4 bg-gray-50">
                 {chatMessages.length === 0 && (
-                  <div className="bg-white p-3 rounded-lg rounded-tl-none shadow-sm border border-gray-100 text-sm text-slate-600">
-                    Hi! How can we help you today?
+                  <div className="bg-white p-3 rounded-lg rounded-tl-none shadow-sm border border-gray-100 max-w-[80%]">
+                    <p className="text-slate-700">Hi there! How can I help you today?</p>
                   </div>
                 )}
                 {chatMessages.map((msg) => (
                   <div key={msg.id} className={`flex ${msg.isUser ? 'justify-end' : 'justify-start'}`}>
-                    <div className={`p-3 rounded-lg text-sm max-w-[85%] ${
+                    <div className={`p-3 rounded-lg max-w-[80%] shadow-sm ${
                       msg.isUser 
-                        ? 'bg-[#fb6200] text-white rounded-tr-none' 
-                        : 'bg-white text-slate-700 border border-gray-100 rounded-tl-none'
+                        ? 'bg-orange-500 text-white rounded-tr-none' 
+                        : 'bg-white text-slate-700 rounded-tl-none border border-gray-100'
                     }`}>
                       {msg.text}
                     </div>
@@ -232,20 +361,65 @@ export default function HomePage() {
                 ))}
               </div>
 
-              <form onSubmit={handleChatSubmit} className="p-3 bg-white border-t border-gray-100 flex gap-2">
+              <form onSubmit={handleChatSubmit} className="p-4 bg-white border-t border-gray-100 flex gap-2">
                 <input
                   type="text"
                   value={chatMessage}
                   onChange={(e) => setChatMessage(e.target.value)}
                   placeholder="Type a message..."
-                  className="flex-1 px-3 py-2 text-sm border border-gray-200 rounded-full focus:outline-none focus:border-[#fb6200]"
+                  className="flex-1 px-4 py-2 border border-gray-200 rounded-full focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500"
                 />
-                <button type="submit" className="text-[#fb6200] hover:bg-orange-50 p-2 rounded-full">
-                  <Send className="w-4 h-4" />
+                <button
+                  type="button"
+                  onClick={handleVoiceInput}
+                  className={`p-2 rounded-full transition-colors ${isListening ? 'bg-red-500 text-white' : 'text-slate-400 hover:text-orange-500'}`}
+                >
+                  {isListening ? <MicOff className="w-5 h-5" /> : <Mic className="w-5 h-5" />}
+                </button>
+                <button 
+                  type="submit"
+                  disabled={!chatMessage.trim()}
+                  className="text-orange-500 hover:text-orange-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <Send className="w-5 h-5" />
                 </button>
               </form>
             </div>
           )}
+        </div>
+      )}
+
+      {/* Support Modal */}
+      {showSupportModal && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
+          <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl animate-in zoom-in-95 duration-200">
+            <div className="flex justify-between items-center mb-6">
+              <h3 className="text-2xl font-bold text-slate-800">Contact Support</h3>
+              <button onClick={() => setShowSupportModal(false)} className="text-slate-400 hover:text-slate-600">
+                <X className="w-6 h-6" />
+              </button>
+            </div>
+            <div className="space-y-4">
+              <a href="tel:18444354795" className="flex items-center space-x-4 p-4 rounded-xl border border-gray-200 hover:border-orange-500 hover:bg-orange-50 transition-all group">
+                <div className="bg-orange-100 p-3 rounded-full group-hover:bg-orange-200">
+                  <Phone className="w-6 h-6 text-orange-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-800">Call Us</p>
+                  <p className="text-slate-600">1 (844) 435 4795</p>
+                </div>
+              </a>
+              <a href="mailto:Support@flipiq.com" className="flex items-center space-x-4 p-4 rounded-xl border border-gray-200 hover:border-orange-500 hover:bg-orange-50 transition-all group">
+                <div className="bg-orange-100 p-3 rounded-full group-hover:bg-orange-200">
+                  <Mail className="w-6 h-6 text-orange-600" />
+                </div>
+                <div>
+                  <p className="font-semibold text-slate-800">Email Us</p>
+                  <p className="text-slate-600">Support@flipiq.com</p>
+                </div>
+              </a>
+            </div>
+          </div>
         </div>
       )}
     </div>
